@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>StockPilot Pro — Pilotez votre stock</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"/>
+<meta name="referrer" content="no-referrer"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml"/>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+<div class="brand"><img src="assets/logo.svg" alt="logo" width="32" height="32"/><div><span class="brand-name">StockPilot Pro</span><small class="tagline">Pilotez votre stock en temps réel</small></div></div>
+<div class="search"><span>⌕</span><input id="globalSearch" placeholder="Recherche produit, commande, client..."/></div>
+<div class="site-select"><span>◎</span><select id="siteSelect"><option value="Tous">Tous</option><option value="Paris">Paris</option><option value="Lyon">Lyon</option></select></div>
+<button class="icon-btn scan" id="btnScan" title="Scan rapide">▦ Scan</button>
+<button class="icon-btn notif" id="btnNotif">✉<em id="notifCount">10</em></button>
+<div class="user"><div class="avatar">GB</div><div><small>Bonjour</small><strong>Guillaume blanc</strong></div></div>
+<button class="burger" id="burger">☰</button>
+</header>
+<aside class="sidebar" id="sidebar"><nav id="nav"></nav></aside>
+<main class="main" id="main"></main>
+</div>
+<div class="modal-back" id="modalBack"><div class="modal" id="modal"></div></div>
+<div class="toasts" id="toasts"></div>
+<div class="notif-panel" id="notifPanel"></div>
+<div class="modal-back open" id="loginBack"><div class="modal" style="max-width:380px">
+<h3>StockPilot Pro — Connexion</h3>
+<p style="font-size:13px;color:#555">Session 15 min. 5 échecs = verrouillage 60s.</p>
+<label>Identifiant</label><input id="loginUser" autocomplete="username" value="admin"/>
+<label>Mot de passe</label><input id="loginPass" type="password" autocomplete="current-password"/>
+<p id="loginErr" style="color:#b3261e;font-size:13px"></p>
+<button class="btn" id="doLogin" style="width:100%">Se connecter</button>
+<p style="font-size:12px;color:#777">Démo : admin / StockPilot!2026 — magasinier / Magasinier!2026. Changez-les en production.</p>
+</div></div>
+<script src="security.js"></script>
+<script>
+Sec.ensureUsers().then(() => {
+  const back = document.getElementById('loginBack');
+  if (Sec.session()) back.classList.remove('open');
+  document.getElementById('doLogin').onclick = async () => {
+    try { await Sec.login(document.getElementById('loginUser').value, document.getElementById('loginPass').value); back.classList.remove('open'); }
+    catch (e) { document.getElementById('loginErr').textContent = e.message; }
+  };
+});
+</script>
+<script src="app.js"></script>
+</body>
+</html>

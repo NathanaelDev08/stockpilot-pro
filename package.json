@@ -1,0 +1,14 @@
+{
+  "name": "monstock-laptop",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "tauri": "tauri",
+    "audit": "npm audit --audit-level=moderate"
+  },
+  "engines": { "node": ">=20" },
+  "devDependencies": {
+    "@tauri-apps/cli": "2.12.0"
+  }
+}
